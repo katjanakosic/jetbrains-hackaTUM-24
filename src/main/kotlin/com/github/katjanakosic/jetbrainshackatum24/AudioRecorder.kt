@@ -1,13 +1,13 @@
 package com.github.katjanakosic.jetbrainshackatum24
 import javax.sound.sampled.*
-import java.io.ByteArrayOutputStream
 import java.io.IOException
 
-class AudioRecorder {
+
+class AudioRecorder(private val audioDataListener: (ByteArray) -> Unit) {
     private val audioFormat: AudioFormat = AudioFormat(16000F, 16, 1, true, false)
     private var targetDataLine: TargetDataLine? = null
-    private val outputStream = ByteArrayOutputStream()
     private var recordingThread: Thread? = null
+    private var isRecording = false
 
     fun startRecording() {
         try {
@@ -15,13 +15,17 @@ class AudioRecorder {
             targetDataLine = AudioSystem.getLine(info) as TargetDataLine
             targetDataLine?.open(audioFormat)
             targetDataLine?.start()
+            isRecording = true
 
             val buffer = ByteArray(4096)
             recordingThread = Thread {
                 try {
-                    while (targetDataLine?.isOpen == true) {
+                    while (isRecording) {
                         val bytesRead = targetDataLine?.read(buffer, 0, buffer.size) ?: 0
-                        outputStream.write(buffer, 0, bytesRead)
+                        if (bytesRead > 0) {
+                            val audioChunk = buffer.copyOf(bytesRead)
+                            audioDataListener(audioChunk)
+                        }
                     }
                 } catch (ex: IOException) {
                     ex.printStackTrace()
@@ -33,10 +37,15 @@ class AudioRecorder {
         }
     }
 
-    fun stopRecording(): ByteArray {
+    fun stopRecording() {
+        isRecording = false
         targetDataLine?.stop()
         targetDataLine?.close()
-        recordingThread?.join()
-        return outputStream.toByteArray()
+        try {
+            recordingThread?.join()
+        } catch (e: InterruptedException) {
+            e.printStackTrace()
+        }
     }
 }
+

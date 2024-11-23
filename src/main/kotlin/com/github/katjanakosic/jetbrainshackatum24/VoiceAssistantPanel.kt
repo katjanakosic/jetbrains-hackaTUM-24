@@ -12,6 +12,10 @@ class VoiceAssistantPanel : JPanel() {
 
     private var isRecording = false
     private var audioRecorder: AudioRecorder? = null
+    private var deepgramClient: DeepgramStreamingClient? = null
+
+    // Store all partial transcriptions
+    private val partialTranscriptions = StringBuilder()
 
     init {
         layout = BoxLayout(this, BoxLayout.Y_AXIS)
@@ -36,24 +40,67 @@ class VoiceAssistantPanel : JPanel() {
     }
 
     private fun startRecording() {
-        audioRecorder = AudioRecorder()
+        val properties = Properties()
+
+        val propertiesStream = javaClass.classLoader.getResourceAsStream("config.properties")
+        if (propertiesStream == null) {
+            Messages.showErrorDialog("Could not find config.properties.", "Error")
+            return
+        }
+        properties.load(propertiesStream)
+        val deepgramApiKey = properties.getProperty("DEEPGRAM_API_KEY")
+        if (deepgramApiKey.isNullOrBlank()) {
+            Messages.showErrorDialog("API key not found in config.properties.", "Error")
+            return
+        }
+
+        // Initialize Deepgram Streaming Client
+        deepgramClient = DeepgramStreamingClient(
+            apiKey = deepgramApiKey,
+            transcriptionListener = { transcription, isFinal ->
+                updateTranscription(transcription)
+            },
+            errorListener = { error ->
+                displayMessage("System", error)
+            }
+        )
+        deepgramClient?.connect()
+
+        // Initialize Audio Recorder
+        audioRecorder = AudioRecorder { audioData ->
+            deepgramClient?.sendAudioData(audioData)
+        }
         audioRecorder?.startRecording()
-        displayMessage("System", "Recording started...")
+        displayMessage("System", "Recording started... \nUser: ")
     }
 
     private fun stopRecording() {
-        val audioData = audioRecorder?.stopRecording()
+        audioRecorder?.stopRecording()
         audioRecorder = null
+        deepgramClient?.disconnect()
+        deepgramClient = null
         displayMessage("System", "Recording stopped.")
-        // Now send audioData to Deepgram for transcription
-        if (audioData != null) {
-            transcribeAudio(audioData)
+
+        // Send the consolidated transcription to OpenAI
+        val userMessage = partialTranscriptions.toString().trim()
+        if (userMessage.isNotEmpty()) {
+            sendToOpenAI(userMessage)
+            partialTranscriptions.clear()
         } else {
-            displayMessage("System", "No audio data captured.")
+            displayMessage("System", "No transcription available to send.")
         }
     }
 
-    private fun transcribeAudio(audioData: ByteArray) {
+    private fun updateTranscription(transcription: String) {
+        SwingUtilities.invokeLater {
+            // Append new partial transcription
+            partialTranscriptions.append(transcription).append(" ")
+            chatHistoryArea.append(transcription)
+        }
+    }
+
+    private fun sendToOpenAI(message: String) {
+
         val properties = Properties()
 
         val propertiesStream = javaClass.classLoader.getResourceAsStream("config.properties")
@@ -63,19 +110,14 @@ class VoiceAssistantPanel : JPanel() {
         }
         properties.load(propertiesStream)
         val openAiApiKey = properties.getProperty("OPENAI_API_KEY")
-        val deepgramApiKey = properties.getProperty("DEEPGRAM_API_KEY")
-        if (openAiApiKey.isNullOrBlank() && deepgramApiKey.isNullOrBlank()) {
+        if (openAiApiKey.isNullOrBlank()) {
             Messages.showErrorDialog("API key not found in config.properties.", "Error")
             return
         }
 
-
         val thread = Thread {
             try {
-                val transcript = DeepgramClient.transcribeAudio(audioData, deepgramApiKey)
-                displayMessage("User", transcript)
-                // Now send the transcript to OpenAI
-                val response = OpenAIClient.getChatResponse(transcript, openAiApiKey)
+                val response = OpenAIClient.getChatResponse(message, openAiApiKey)
                 displayMessage("Assistant", response)
             } catch (e: Exception) {
                 e.printStackTrace()
@@ -87,7 +129,7 @@ class VoiceAssistantPanel : JPanel() {
 
     private fun displayMessage(sender: String, message: String) {
         SwingUtilities.invokeLater {
-            chatHistoryArea.append("$sender: $message\n")
+            chatHistoryArea.append("\n$sender: $message")
         }
     }
 }
