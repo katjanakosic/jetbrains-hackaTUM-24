@@ -36,6 +36,11 @@ class CodeExplainer : AnAction() {
             return
         }
 
+        // Get the entire file content
+        val document = editor.document
+        val fileContent = document.text
+
+        // Read API key from config.properties
         val properties = Properties()
         val propertiesStream = javaClass.classLoader.getResourceAsStream("config.properties")
         if (propertiesStream == null) {
@@ -56,7 +61,16 @@ class CodeExplainer : AnAction() {
             var errorMessage: String? = null
 
             override fun run(indicator: ProgressIndicator) {
-                val prompt = "Act as a coding expert. Explain the following code in detail:\n\n$selectedText"
+                // Build the prompt including the entire file content
+                val prompt = """
+                    |Act as a coding expert.
+                    |
+                    |Consider the content of the file:
+                    |$fileContent
+                    |
+                    |Please explain the following selected code in detail, considering the context of the entire file:
+                    |$selectedText
+                    """.trimMargin()
 
                 val messagesArray = JSONArray().apply {
                     put(JSONObject().apply {
@@ -101,11 +115,6 @@ class CodeExplainer : AnAction() {
             }
 
             override fun onSuccess() {
-//                if (content != null) {
-//                    Messages.showInfoMessage(content, "Chat's Response")
-//                } else if (errorMessage != null) {
-//                    Messages.showErrorDialog(errorMessage, "Error")
-//                }
                 if (content != null) {
                     ApplicationManager.getApplication().invokeLater {
                         val dialog = ExplanationDialog(content!!)
@@ -123,12 +132,11 @@ class CodeExplainer : AnAction() {
     }
 }
 
-
 class ExplanationDialog(private val explanation: String) : DialogWrapper(true) {
 
     init {
         init()
-        title = "ChatGPT Response"
+        title = "Chat's Response"
         setResizable(true)
     }
 
