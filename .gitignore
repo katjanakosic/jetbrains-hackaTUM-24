@@ -2,4 +2,5 @@
 .idea
 .intellijPlatform
 .qodana
+src/main/resources/config.properties
 build
