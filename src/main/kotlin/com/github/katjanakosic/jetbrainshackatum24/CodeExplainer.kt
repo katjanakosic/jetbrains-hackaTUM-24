@@ -3,6 +3,7 @@ package com.github.katjanakosic.jetbrainshackatum24
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
 import com.intellij.openapi.actionSystem.CommonDataKeys
+import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.editor.CaretModel
 import com.intellij.openapi.editor.Editor
 import com.intellij.openapi.progress.ProgressIndicator
@@ -14,7 +15,15 @@ import okhttp3.Request
 import okhttp3.RequestBody.Companion.toRequestBody
 import org.json.JSONArray
 import org.json.JSONObject
+import java.awt.BorderLayout
+import java.awt.Dimension
 import java.util.Properties
+import javax.swing.JComponent
+import javax.swing.JPanel
+import com.intellij.openapi.ui.DialogWrapper
+import com.intellij.ui.components.JBScrollPane
+import com.intellij.ui.components.JBTextArea
+import org.jetbrains.annotations.Nullable
 
 class CodeExplainer : AnAction() {
     override fun actionPerformed(e: AnActionEvent) {
@@ -92,8 +101,16 @@ class CodeExplainer : AnAction() {
             }
 
             override fun onSuccess() {
+//                if (content != null) {
+//                    Messages.showInfoMessage(content, "Chat's Response")
+//                } else if (errorMessage != null) {
+//                    Messages.showErrorDialog(errorMessage, "Error")
+//                }
                 if (content != null) {
-                    Messages.showInfoMessage(content, "ChatGPT Response")
+                    ApplicationManager.getApplication().invokeLater {
+                        val dialog = ExplanationDialog(content!!)
+                        dialog.show()
+                    }
                 } else if (errorMessage != null) {
                     Messages.showErrorDialog(errorMessage, "Error")
                 }
@@ -103,5 +120,33 @@ class CodeExplainer : AnAction() {
                 Messages.showErrorDialog("An error occurred: ${error.message}", "Error")
             }
         }.queue()
+    }
+}
+
+
+class ExplanationDialog(private val explanation: String) : DialogWrapper(true) {
+
+    init {
+        init()
+        title = "ChatGPT Response"
+        setResizable(true)
+    }
+
+    @Nullable
+    override fun createCenterPanel(): JComponent {
+        val panel = JPanel()
+        panel.layout = BorderLayout()
+
+        val textArea = JBTextArea()
+        textArea.text = explanation
+        textArea.isEditable = false
+        textArea.lineWrap = true
+        textArea.wrapStyleWord = true
+
+        val scrollPane = JBScrollPane(textArea)
+        scrollPane.preferredSize = Dimension(600, 400) // Adjust size as needed
+
+        panel.add(scrollPane, BorderLayout.CENTER)
+        return panel
     }
 }
