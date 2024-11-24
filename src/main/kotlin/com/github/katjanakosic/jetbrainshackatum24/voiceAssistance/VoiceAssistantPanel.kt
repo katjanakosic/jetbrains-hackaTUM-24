@@ -1,14 +1,18 @@
 package com.github.katjanakosic.jetbrainshackatum24.voiceAssistance
+
 import javax.swing.*
 import javax.swing.BoxLayout
 import javax.swing.SwingUtilities
 import java.util.Properties
 import com.intellij.openapi.ui.Messages
+import java.awt.Color
+import javax.swing.text.*
+import com.intellij.ui.JBColor
 
 class VoiceAssistantPanel : JPanel() {
 
     private val recordButton: JButton = JButton("Record")
-    private val chatHistoryArea: JTextArea = JTextArea(15, 50)
+    private val chatHistoryArea: JTextPane = JTextPane()
 
     private var isRecording = false
     private var audioRecorder: AudioRecorder? = null
@@ -22,6 +26,18 @@ class VoiceAssistantPanel : JPanel() {
 
         chatHistoryArea.isEditable = false
         val scrollPane = JScrollPane(chatHistoryArea)
+
+        // Initialize styles for different message types
+        val doc = chatHistoryArea.styledDocument
+
+        val systemStyle = chatHistoryArea.addStyle("SystemStyle", null)
+        StyleConstants.setForeground(systemStyle, JBColor.GRAY)
+
+        val userStyle = chatHistoryArea.addStyle("UserStyle", null)
+        StyleConstants.setForeground(userStyle, JBColor.BLUE)
+
+        val assistantStyle = chatHistoryArea.addStyle("AssistantStyle", null)
+        StyleConstants.setForeground(assistantStyle, JBColor.GREEN)
 
         recordButton.addActionListener {
             if (!isRecording) {
@@ -71,7 +87,8 @@ class VoiceAssistantPanel : JPanel() {
             deepgramClient?.sendAudioData(audioData)
         }
         audioRecorder?.startRecording()
-        displayMessage("System", "Recording started... \nUser: ")
+        displayMessage("System", "Recording started...")
+        displayMessage("User", "")
     }
 
     private fun stopRecording() {
@@ -95,7 +112,13 @@ class VoiceAssistantPanel : JPanel() {
         SwingUtilities.invokeLater {
             // Append new partial transcription
             partialTranscriptions.append(transcription).append(" ")
-            chatHistoryArea.append(transcription)
+            val doc = chatHistoryArea.styledDocument
+            val userStyle = chatHistoryArea.getStyle("UserStyle")
+            try {
+                doc.insertString(doc.length, transcription, userStyle)
+            } catch (e: BadLocationException) {
+                e.printStackTrace()
+            }
         }
     }
 
@@ -129,7 +152,13 @@ class VoiceAssistantPanel : JPanel() {
 
     private fun displayMessage(sender: String, message: String) {
         SwingUtilities.invokeLater {
-            chatHistoryArea.append("\n$sender: $message")
+            val doc = chatHistoryArea.styledDocument
+            val style = chatHistoryArea.getStyle("${sender}Style") ?: chatHistoryArea.getStyle("SystemStyle")
+            try {
+                doc.insertString(doc.length, "\n\n$sender: $message", style)
+            } catch (e: BadLocationException) {
+                e.printStackTrace()
+            }
         }
     }
 }
