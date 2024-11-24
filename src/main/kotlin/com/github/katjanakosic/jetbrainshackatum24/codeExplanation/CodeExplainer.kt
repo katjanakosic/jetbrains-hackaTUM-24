@@ -1,4 +1,4 @@
-package com.github.katjanakosic.jetbrainshackatum24
+package com.github.katjanakosic.jetbrainshackatum24.codeExplanation
 
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent

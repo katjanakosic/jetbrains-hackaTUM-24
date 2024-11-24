@@ -1,4 +1,4 @@
-package com.github.katjanakosic.jetbrainshackatum24
+package com.github.katjanakosic.jetbrainshackatum24.voiceAssistance
 import javax.sound.sampled.*
 import java.io.IOException
 

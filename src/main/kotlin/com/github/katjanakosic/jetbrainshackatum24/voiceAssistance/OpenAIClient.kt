@@ -1,4 +1,4 @@
-package com.github.katjanakosic.jetbrainshackatum24
+package com.github.katjanakosic.jetbrainshackatum24.voiceAssistance
 
 import okhttp3.*
 import okhttp3.MediaType.Companion.toMediaType

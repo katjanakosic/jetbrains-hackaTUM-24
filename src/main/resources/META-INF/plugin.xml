@@ -12,11 +12,11 @@
         <toolWindow factoryClass="com.github.katjanakosic.jetbrainshackatum24.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
         
         <toolWindow id="Voice Assistant"
-                    factoryClass="com.github.katjanakosic.jetbrainshackatum24.VoiceAssistantToolWindowFactory"
+                    factoryClass="com.github.katjanakosic.jetbrainshackatum24.voiceAssistance.VoiceAssistantToolWindowFactory"
                     anchor="bottom"
                     icon="AllIcons.CodeWithMe.CwmEnableCall"/>
         <toolWindow id="Generated Unit Tests"
-                    factoryClass="com.github.katjanakosic.jetbrainshackatum24.UnitTestToolWindowFactory"
+                    factoryClass="com.github.katjanakosic.jetbrainshackatum24.unitTestGeneration.UnitTestToolWindowFactory"
                     anchor="bottom"
                     icon="AllIcons.Toolwindows.ToolWindowStructure"/>
     </extensions>
@@ -25,16 +25,16 @@
         <listener class="com.github.katjanakosic.jetbrainshackatum24.listeners.MyApplicationActivationListener" topic="com.intellij.openapi.application.ApplicationActivationListener"/>
     </applicationListeners>
     <actions>
-        <action id="com.github.katjanakosic.jetbrainshackatum24.VoiceAssistant"
-                class="com.github.katjanakosic.jetbrainshackatum24.VoiceAssistant" text="Voice Assistant" icon="AllIcons.CodeWithMe.CwmMicOn">
+        <action id="com.github.katjanakosic.jetbrainshackatum24.voiceAssistance.VoiceAssistant"
+                class="com.github.katjanakosic.jetbrainshackatum24.voiceAssistance.VoiceAssistant" text="Voice Assistant" icon="AllIcons.CodeWithMe.CwmMicOn">
             <add-to-group group-id="MainToolbarRight" anchor="first"/>
         </action>
-        <action id="com.github.katjanakosic.jetbrainshackatum24.UnitTestGenerator"
-                class="com.github.katjanakosic.jetbrainshackatum24.UnitTestGenerator" text="Generate Unit Test" icon="AllIcons.Toolwindows.ToolWindowStructure">
+        <action id="com.github.katjanakosic.jetbrainshackatum24.unitTestGeneration.UnitTestGenerator"
+                class="com.github.katjanakosic.jetbrainshackatum24.unitTestGeneration.UnitTestGenerator" text="Generate Unit Test" icon="AllIcons.Toolwindows.ToolWindowStructure">
             <add-to-group group-id="EditorPopupMenu" anchor="first"/>
         </action>
-        <action id="com.github.katjanakosic.jetbrainshackatum24.CodeExplainer"
-                class="com.github.katjanakosic.jetbrainshackatum24.CodeExplainer" text="Ask Chat for Help!" icon="AllIcons.Debugger.Question_badge">
+        <action id="com.github.katjanakosic.jetbrainshackatum24.codeExplanation.CodeExplainer"
+                class="com.github.katjanakosic.jetbrainshackatum24.codeExplanation.CodeExplainer" text="Ask Chat for Help!" icon="AllIcons.Debugger.Question_badge">
             <add-to-group group-id="EditorPopupMenu" anchor="first"/>
             <keyboard-shortcut keymap="$default" first-keystroke="meta alt G"/>
         </action>

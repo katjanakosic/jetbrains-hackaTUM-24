@@ -1,4 +1,4 @@
-package com.github.katjanakosic.jetbrainshackatum24
+package com.github.katjanakosic.jetbrainshackatum24.voiceAssistance
 import javax.swing.*
 import javax.swing.BoxLayout
 import javax.swing.SwingUtilities
