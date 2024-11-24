@@ -11,7 +11,8 @@ This repository is part of the hackaTUM 2024.
 
 - [Project Description](#project-description)
 - [Project Structure](#project-structure)
-- [Installation & Usage](#installation)
+- [Requirements](#requirements)
+- [Installation & Usage](#installation--usage)
 - [Features](#features)
 
 
@@ -20,9 +21,11 @@ This repository is part of the hackaTUM 2024.
 
 
 ## Project Description
+<!-- Plugin description -->
 This project contains plugins for code explanation on selected code snippets, unit test generation for specific file functions, and a real-time voice assistant.
 
 The plugins are built using Kotlin, Deepgram, and OpenAI.
+<!-- Plugin description end -->
 
 ---
 
