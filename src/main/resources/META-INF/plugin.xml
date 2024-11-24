@@ -10,6 +10,11 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <toolWindow factoryClass="com.github.katjanakosic.jetbrainshackatum24.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
+        
+        <toolWindow id="Voice Assistant"
+                    factoryClass="com.github.katjanakosic.jetbrainshackatum24.VoiceAssistantToolWindowFactory"
+                    anchor="bottom"
+                    icon="AllIcons.CodeWithMe.CwmEnableCall"/>
         <toolWindow id="Generated Unit Tests"
                     factoryClass="com.github.katjanakosic.jetbrainshackatum24.UnitTestToolWindowFactory"
                     anchor="bottom"
@@ -20,6 +25,10 @@
         <listener class="com.github.katjanakosic.jetbrainshackatum24.listeners.MyApplicationActivationListener" topic="com.intellij.openapi.application.ApplicationActivationListener"/>
     </applicationListeners>
     <actions>
+        <action id="com.github.katjanakosic.jetbrainshackatum24.VoiceAssistant"
+                class="com.github.katjanakosic.jetbrainshackatum24.VoiceAssistant" text="Voice Assistant" icon="AllIcons.CodeWithMe.CwmMicOn">
+            <add-to-group group-id="MainToolbarRight" anchor="first"/>
+        </action>
         <action id="com.github.katjanakosic.jetbrainshackatum24.CodeExplainer"
                 class="com.github.katjanakosic.jetbrainshackatum24.CodeExplainer" text="Ask Chat for Help!">
             <add-to-group group-id="EditorPopupMenu" anchor="first"/>
