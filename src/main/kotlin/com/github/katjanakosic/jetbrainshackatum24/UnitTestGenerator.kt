@@ -21,6 +21,7 @@ import java.awt.BorderLayout
 import java.io.IOException
 import javax.swing.JPanel
 import javax.swing.JTextArea
+import javax.swing.JScrollPane
 import java.util.Properties
 
 class UnitTestGenerator : AnAction() {
@@ -153,7 +154,8 @@ class UnitTestPanel {
 
     init {
         textArea.isEditable = false
-        panel.add(textArea, BorderLayout.CENTER)
+        val scrollPane = JScrollPane(textArea)
+        panel.add(scrollPane, BorderLayout.CENTER)
     }
 
     fun setUnitTestCode(unitTestCode: String) {
