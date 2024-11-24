@@ -24,6 +24,7 @@
                 class="com.github.katjanakosic.jetbrainshackatum24.CodeExplainer" text="Ask Chat for Help!">
             <add-to-group group-id="EditorPopupMenu" anchor="first"/>
             <keyboard-shortcut keymap="$default" first-keystroke="meta alt G"/>
+        </action>
         <action id="com.github.katjanakosic.jetbrainshackatum24.UnitTestGenerator"
                 class="com.github.katjanakosic.jetbrainshackatum24.UnitTestGenerator" text="Generate Unit Test">
             <add-to-group group-id="EditorPopupMenu" anchor="first"/>
