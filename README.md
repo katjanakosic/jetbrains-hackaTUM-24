@@ -1,51 +1,90 @@
-# jetbrains-hackaTUM-24
+# Pandora's Toolbox
+An AI-powered IntelliJ plugin that enables code explanations, unit test generation, and a real-time voice assistant
 
-![Build](https://github.com/katjanakosic/jetbrains-hackaTUM-24/workflows/Build/badge.svg)
-[![Version](https://img.shields.io/jetbrains/plugin/v/MARKETPLACE_ID.svg)](https://plugins.jetbrains.com/plugin/MARKETPLACE_ID)
-[![Downloads](https://img.shields.io/jetbrains/plugin/d/MARKETPLACE_ID.svg)](https://plugins.jetbrains.com/plugin/MARKETPLACE_ID)
-
-## Template ToDo list
-- [x] Create a new [IntelliJ Platform Plugin Template][template] project.
-- [ ] Get familiar with the [template documentation][template].
-- [ ] Adjust the [pluginGroup](./gradle.properties) and [pluginName](./gradle.properties), as well as the [id](./src/main/resources/META-INF/plugin.xml) and [sources package](./src/main/kotlin).
-- [ ] Adjust the plugin description in `README` (see [Tips][docs:plugin-description])
-- [ ] Review the [Legal Agreements](https://plugins.jetbrains.com/docs/marketplace/legal-agreements.html?from=IJPluginTemplate).
-- [ ] [Publish a plugin manually](https://plugins.jetbrains.com/docs/intellij/publishing-plugin.html?from=IJPluginTemplate) for the first time.
-- [ ] Set the `MARKETPLACE_ID` in the above README badges. You can obtain it once the plugin is published to JetBrains Marketplace.
-- [ ] Set the [Plugin Signing](https://plugins.jetbrains.com/docs/intellij/plugin-signing.html?from=IJPluginTemplate) related [secrets](https://github.com/JetBrains/intellij-platform-plugin-template#environment-variables).
-- [ ] Set the [Deployment Token](https://plugins.jetbrains.com/docs/marketplace/plugin-upload.html?from=IJPluginTemplate).
-- [ ] Click the <kbd>Watch</kbd> button on the top of the [IntelliJ Platform Plugin Template][template] to be notified about releases containing new features and fixes.
-
-<!-- Plugin description -->
-This Fancy IntelliJ Platform Plugin is going to be your implementation of the brilliant ideas that you have.
-
-This specific section is a source for the [plugin.xml](/src/main/resources/META-INF/plugin.xml) file which will be extracted by the [Gradle](/build.gradle.kts) during the build process.
-
-To keep everything working, do not remove `<!-- ... -->` sections. 
-<!-- Plugin description end -->
-
-## Installation
-
-- Using the IDE built-in plugin system:
-  
-  <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>Marketplace</kbd> > <kbd>Search for "jetbrains-hackaTUM-24"</kbd> >
-  <kbd>Install</kbd>
-  
-- Using JetBrains Marketplace:
-
-  Go to [JetBrains Marketplace](https://plugins.jetbrains.com/plugin/MARKETPLACE_ID) and install it by clicking the <kbd>Install to ...</kbd> button in case your IDE is running.
-
-  You can also download the [latest release](https://plugins.jetbrains.com/plugin/MARKETPLACE_ID/versions) from JetBrains Marketplace and install it manually using
-  <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>⚙️</kbd> > <kbd>Install plugin from disk...</kbd>
-
-- Manually:
-
-  Download the [latest release](https://github.com/katjanakosic/jetbrains-hackaTUM-24/releases/latest) and install it manually using
-  <kbd>Settings/Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>⚙️</kbd> > <kbd>Install plugin from disk...</kbd>
+This repository is part of the hackaTUM 2024.
 
 
 ---
-Plugin based on the [IntelliJ Platform Plugin Template][template].
 
-[template]: https://github.com/JetBrains/intellij-platform-plugin-template
-[docs:plugin-description]: https://plugins.jetbrains.com/docs/intellij/plugin-user-experience.html#plugin-description-and-presentation
+
+## Table of Contents
+
+- [Project Description](#project-description)
+- [Project Structure](#project-structure)
+- [Installation & Usage](#installation)
+- [Features](#features)
+
+
+
+---
+
+
+## Project Description
+This project contains plugins for code explanation on selected code snippets, unit test generation for specific file functions, and a real-time voice assistant.
+
+The plugins are built using Kotlin, Deepgram, and OpenAI.
+
+---
+
+
+## Project Structure
+
+This project structure focuses on the most important files in this project.
+
+```
+SwiftScriptRunner/
+├── SwiftScriptRunnerApp.swift            -> Main application
+├── ContentView.swift                     -> Main SwiftUI View
+├── Views/
+│   ├── SyntaxHighlightingTextView.swift  -> Syntax highlighting logic
+├── Models/
+│   ├── ScriptError.swift                 -> Error handling structures
+└── Utilities/
+    ├── CustomTextView.swift              -> Custom NSTextView subclass for editor
+    └── Notifications.swift               -> Notification extensions
+
+```
+
+
+---
+
+
+## Requirements
+
+- **IntelliJ**: Version 2024.3 or later
+- **Gradle**: Version 8.10.2 or later
+- **Okhttp3**: Version 4.12.0 or later
+- **JSON**: Version 20240303 or later
+
+---
+
+## Installation & Usage
+
+1. **Clone the Repository** `git clone https://github.com/katjanakosic/jetbrains-hackaTUM-24`
+
+2. **Open the Project**
+
+3. **Build and Run**
+    - Select the 'Run Plugin' Gradle option at the top toolbar.
+    - Run the plugin by pressing the run button.
+    - Annother IntelliJ window will pop up where you can test the implementation. Open an existing project for this.
+      
+3. **Usage**
+    - Code Explanation: Select a code snippet, right-click on it and select the `Ask Chat for Help!` button in the editor popup menu.
+    - Unit Test Generator: 
+    - Voice Assistant:
+
+---
+
+
+## Features
+
+- **Code Explanation**
+
+- **Unit Test Generator**
+
+- **Real-Time Voice Assistant**
+
+
+---
+
