@@ -10,9 +10,19 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <toolWindow factoryClass="com.github.katjanakosic.jetbrainshackatum24.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
+        <toolWindow id="Generated Unit Tests"
+                    factoryClass="com.github.katjanakosic.jetbrainshackatum24.UnitTestToolWindowFactory"
+                    anchor="bottom"
+                    icon="AllIcons.Actions.ArrowExpand"/>
     </extensions>
 
     <applicationListeners>
         <listener class="com.github.katjanakosic.jetbrainshackatum24.listeners.MyApplicationActivationListener" topic="com.intellij.openapi.application.ApplicationActivationListener"/>
     </applicationListeners>
+    <actions>
+        <action id="com.github.katjanakosic.jetbrainshackatum24.UnitTestGenerator"
+                class="com.github.katjanakosic.jetbrainshackatum24.UnitTestGenerator" text="Generate Unit Test">
+            <add-to-group group-id="EditorPopupMenu" anchor="first"/>
+        </action>
+    </actions>
 </idea-plugin>
