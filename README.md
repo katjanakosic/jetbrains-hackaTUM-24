@@ -22,9 +22,14 @@ This repository is part of the hackaTUM 2024.
 
 ## Project Description
 <!-- Plugin description -->
-This project contains plugins for code explanation on selected code snippets, unit test generation for specific file functions, and a real-time voice assistant.
+Pandora's Toolbox comprises three IntelliJ plugins designed to enhance developer productivity and understanding:
 
-The plugins are built using Kotlin, Deepgram, and OpenAI.
+1. Code Explanation: Offers detailed explanations of selected code snippets to aid comprehension.
+2. Unit Test Generator: Automatically generates unit tests for specific functions or classes.
+3. Real-Time Voice Assistant: Allows developers to interact with IntelliJ using voice commands for hands-free operation.
+
+Built using Kotlin, OpenAI for intelligent code analysis and generation, and Deepgram for speech recognition, these 
+plugins integrate seamlessly into the IntelliJ environment to provide a robust development experience.
 <!-- Plugin description end -->
 
 ---
@@ -35,16 +40,12 @@ The plugins are built using Kotlin, Deepgram, and OpenAI.
 This project structure focuses on the most important files in this project.
 
 ```
-SwiftScriptRunner/
-├── SwiftScriptRunnerApp.swift            -> Main application
-├── ContentView.swift                     -> Main SwiftUI View
-├── Views/
-│   ├── SyntaxHighlightingTextView.swift  -> Syntax highlighting logic
-├── Models/
-│   ├── ScriptError.swift                 -> Error handling structures
-└── Utilities/
-    ├── CustomTextView.swift              -> Custom NSTextView subclass for editor
-    └── Notifications.swift               -> Notification extensions
+jetbrains-hackaTUM-24/
+└── src/main/kotlin/
+    └── com.github.katjanakosic.jetbrainshackatum24/
+        ├── codeExplanation               -> Code Explanation plugin
+        ├── unitTestGeneration            -> Unit Test Generation plugin
+        └── voiceAssistance               -> Voice Assistant plugin
 
 ```
 
@@ -58,6 +59,9 @@ SwiftScriptRunner/
 - **Gradle**: Version 8.10.2 or later
 - **Okhttp3**: Version 4.12.0 or later
 - **JSON**: Version 20240303 or later
+- **OpenAI API Key**: For code analysis and generation
+- **Deepgram API Key**: For voice recognition capabilities 
+
 
 ---
 
@@ -68,25 +72,33 @@ SwiftScriptRunner/
 2. **Open the Project**
 
 3. **Build and Run**
-    - Select the 'Run Plugin' Gradle option at the top toolbar.
-    - Run the plugin by pressing the run button.
-    - Annother IntelliJ window will pop up where you can test the implementation. Open an existing project for this.
+    - Open the Gradle tool window.
+    - Navigate to each plugin's `build.gradle.kts` and ensure dependencies are resolved.
+    - Select the `Run Plugin` Gradle task.
+    - Press the run button to build and launch the plugins.
+    - A new IntelliJ window will open where you can test the installed plugins. Open an existing project to begin.
       
 3. **Usage**
-    - Code Explanation: Select a code snippet, right-click on it and select the `Ask Chat for Help!` button in the editor popup menu.
-    - Unit Test Generator: 
-    - Voice Assistant:
+    - Code Explanation: Select a code snippet, right-click on it and select the `Ask Chat for Help!` option in the editor popup menu.
+    - Unit Test Generator: Select function code, right-click on it and select the `Generate Unit Test` option in the editor popup menu.
+    - Voice Assistant: Click on the microphone icon added to the IntelliJ toolbar and start/stop the recording
 
 ---
 
 
 ## Features
 
-- **Code Explanation**
+- **Code Explanation**: 
+   
+   Provides comprehensive explanations for selected code snippets within the editor, enhancing understanding and facilitating learning.
 
-- **Unit Test Generator**
+- **Unit Test Generator**: 
 
-- **Real-Time Voice Assistant**
+   Automates the creation of unit tests for specific functions or classes, streamlining the testing process and ensuring code reliability.
+
+- **Real-Time Voice Assistant**: 
+
+   Enables developers to interact with IntelliJ using voice commands, promoting a hands-free and efficient workflow.
 
 
 ---
